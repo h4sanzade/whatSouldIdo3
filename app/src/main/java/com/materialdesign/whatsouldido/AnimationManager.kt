@@ -2,6 +2,8 @@ package com.materialdesign.whatsouldido
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.AnimatorListenerAdapter
+import android.animation.Animator
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView
 
@@ -19,11 +21,19 @@ class AnimationManager {
         val scaleY = ObjectAnimator.ofFloat(textView, "scaleY", 0.8f, 1f)
 
         val animatorSet = AnimatorSet()
-        animatorSet.play(fadeOut).before {
-            textView.text = suggestion
-            animatorSet.playTogether(fadeIn, scaleX, scaleY)
-        }
 
+        // Fix: Using AnimatorListenerAdapter instead of before
+        fadeOut.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                textView.text = suggestion
+
+                val scaleAndFadeSet = AnimatorSet()
+                scaleAndFadeSet.playTogether(fadeIn, scaleX, scaleY)
+                scaleAndFadeSet.start()
+            }
+        })
+
+        animatorSet.play(fadeOut)
         animatorSet.interpolator = AccelerateDecelerateInterpolator()
         animatorSet.start()
     }

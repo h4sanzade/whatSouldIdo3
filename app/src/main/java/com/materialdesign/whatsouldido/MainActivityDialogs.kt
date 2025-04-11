@@ -1,7 +1,5 @@
 package com.materialdesign.whatsouldido
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter

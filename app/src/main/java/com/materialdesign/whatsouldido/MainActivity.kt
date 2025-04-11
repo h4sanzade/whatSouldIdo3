@@ -1,21 +1,13 @@
 package com.materialdesign.whatsouldido
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ListView
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
@@ -38,12 +30,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var favoriteButton: ImageButton
     private lateinit var settingsButton: ImageButton
 
-    private val suggestionManager = SuggestionManager()
-    private val animationManager = AnimationManager()
-    private val themeManager = ThemeManager()
-    private val suggestionCounts = mutableMapOf<String, Int>()
-    private val random = Random()
-    private val favorites = mutableSetOf<String>()
+    // Fix: Make sure suggestionManager is properly initialized and accessible to extension functions
+    val suggestionManager = SuggestionManager()
+    val animationManager = AnimationManager()
+    val themeManager = ThemeManager()
+    val suggestionCounts = mutableMapOf<String, Int>()
+    val random = Random()
+    val favorites = mutableSetOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,7 +152,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun generateRandomSuggestion() {
+    fun generateRandomSuggestion() {
         if (suggestionManager.suggestionsList.isEmpty()) {
             Toast.makeText(this, "Henüz öneri eklenmemiş!", Toast.LENGTH_SHORT).show()
             return
@@ -176,21 +169,21 @@ class MainActivity : AppCompatActivity() {
         updateFavoriteButton(suggestion)
     }
 
-    private fun updateEmoji(suggestion: String) {
+    fun updateEmoji(suggestion: String) {
         val category = suggestionManager.getCategoryForSuggestion(suggestion)
         val emoji = category?.emoji ?: "🎲"
         emojiTextView.text = emoji
         animationManager.animateEmoji(emojiTextView)
     }
 
-    private fun updateCount(suggestion: String) {
+    fun updateCount(suggestion: String) {
         val count = suggestionCounts.getOrDefault(suggestion, 0) + 1
         suggestionCounts[suggestion] = count
         countTextView.text = "$count kez önerildi"
         saveCounts()
     }
 
-    private fun updateTheme() {
+    fun updateTheme() {
         themeManager.updateBackground(this, mainLayout, suggestionTextView, countTextView)
     }
 }

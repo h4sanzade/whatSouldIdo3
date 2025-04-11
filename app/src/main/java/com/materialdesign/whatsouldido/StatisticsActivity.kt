@@ -2,30 +2,23 @@ package com.materialdesign.whatsouldido
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import org.json.JSONObject
 import android.content.Context
-import android.graphics.Typeface
-import android.util.TypedValue
-import android.view.Gravity
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import org.json.JSONException
-import java.util.*
 
 class StatisticsActivity : AppCompatActivity() {
 
-    private lateinit var mainLayout: ConstraintLayout
-    private lateinit var statsContainer: LinearLayout
-    private lateinit var themeManager: ThemeManager
-    private val suggestionCounts = mutableMapOf<String, Int>()
-    private val categoryUsage = mutableMapOf<String, Int>()
+    lateinit var mainLayout: ConstraintLayout
+    lateinit var statsContainer: LinearLayout
+    lateinit var themeManager: ThemeManager
+    val suggestionCounts = mutableMapOf<String, Int>()
+    val categoryUsage = mutableMapOf<String, Int>()
+    // Add reference to suggestionManager that is used in StatisticsActivityViews.kt
+    val suggestionManager = SuggestionManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +65,6 @@ class StatisticsActivity : AppCompatActivity() {
     private fun calculateCategoryUsage() {
         categoryUsage.clear()
 
-        val suggestionManager = SuggestionManager()
         suggestionManager.loadSuggestions(this)
 
         // Her bir öneri için kategori kullanımını hesapla
@@ -108,3 +100,4 @@ class StatisticsActivity : AppCompatActivity() {
         // Genel istatistikleri göster
         addGeneralStatistics()
     }
+}
