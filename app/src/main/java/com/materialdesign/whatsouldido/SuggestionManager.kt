@@ -1,6 +1,7 @@
 package com.materialdesign.whatsouldido
 
 import android.content.Context
+import android.graphics.Color
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,12 +13,11 @@ class SuggestionManager {
     private val categories = mutableListOf<Category>()
 
     init {
-        // Varsayılan kategorileri ekle
-        categories.add(Category("Eğlence", "🎮", android.graphics.Color.parseColor("#FF9800")))
-        categories.add(Category("Yemek", "🍔", android.graphics.Color.parseColor("#E91E63")))
-        categories.add(Category("Spor", "🏃", android.graphics.Color.parseColor("#4CAF50")))
-        categories.add(Category("Eğitim", "📚", android.graphics.Color.parseColor("#2196F3")))
-        categories.add(Category("Seyahat", "✈️", android.graphics.Color.parseColor("#9C27B0")))
+        categories.add(Category("Eğlence", "🎮", Color.parseColor("#FF9800")))
+        categories.add(Category("Yemek", "🍔", Color.parseColor("#E91E63")))
+        categories.add(Category("Spor", "🏃", Color.parseColor("#4CAF50")))
+        categories.add(Category("Eğitim", "📚", Color.parseColor("#2196F3")))
+        categories.add(Category("Seyahat", "✈️", Color.parseColor("#9C27B0")))
     }
 
     fun loadSuggestions(context: Context) {
@@ -36,12 +36,9 @@ class SuggestionManager {
                 }
             } catch (e: JSONException) {
                 e.printStackTrace()
-
-                // Hata durumunda varsayılan önerileri ekle
                 addDefaultSuggestions()
             }
         } else {
-            // İlk kullanımda varsayılan önerileri ekle
             addDefaultSuggestions()
             saveSuggestions(context)
         }
@@ -65,7 +62,6 @@ class SuggestionManager {
     }
 
     private fun addDefaultSuggestions() {
-        // Varsayılan önerileri ekle
         suggestionsList.add("Film izle")
         suggestionsList.add("Kitap oku")
         suggestionsList.add("Spor yap")
@@ -83,10 +79,7 @@ class SuggestionManager {
     }
 
     fun getCategoryForSuggestion(suggestion: String): Category? {
-        // Şu anlık rastgele bir kategori döndür
-        // Gerçek uygulamada önerilerin kategorileri saklanmalı
         if (suggestion.isEmpty()) return null
-
         val index = suggestion.length % categories.size
         return categories[index]
     }

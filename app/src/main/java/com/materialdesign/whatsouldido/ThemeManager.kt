@@ -2,6 +2,7 @@ package com.materialdesign.whatsouldido
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,8 +15,6 @@ class ThemeManager {
     fun loadThemeSettings(context: Context) {
         val sharedPrefs = context.getSharedPreferences("NeYapsamPrefs", Context.MODE_PRIVATE)
         currentTheme = sharedPrefs.getString("theme", "system") ?: "system"
-
-        // Sistem temasına göre karanlık mod durumunu belirle
         isDarkMode = when(currentTheme) {
             "system" -> isSystemInDarkMode(context)
             "dark" -> true
@@ -32,14 +31,10 @@ class ThemeManager {
 
     fun setTheme(theme: String, context: Context) {
         currentTheme = theme
-
-        // Tema değişikliğini kaydet
         val sharedPrefs = context.getSharedPreferences("NeYapsamPrefs", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
         editor.putString("theme", theme)
         editor.apply()
-
-        // Karanlık mod durumunu güncelle
         isDarkMode = when(theme) {
             "system" -> isSystemInDarkMode(context)
             "dark" -> true
@@ -50,17 +45,14 @@ class ThemeManager {
     }
 
     fun updateBackground(context: Context, mainLayout: ConstraintLayout, textView: TextView, countTextView: TextView) {
-        // Tema renklerini ayarla
         val backgroundColor = if (isDarkMode) {
             ContextCompat.getColor(context, R.color.darkStart)
-            textView.setTextColor(ContextCompat.getColor(context, R.color.white))
-            countTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else {
             ContextCompat.getColor(context, R.color.lightStart)
-            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
-            countTextView.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
 
         mainLayout.setBackgroundColor(backgroundColor)
+        textView.setTextColor(if (isDarkMode) Color.WHITE else Color.BLACK)
+        countTextView.setTextColor(if (isDarkMode) Color.WHITE else Color.BLACK)
     }
 }

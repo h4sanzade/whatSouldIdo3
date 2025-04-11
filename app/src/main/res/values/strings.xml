@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">whatSouldIdo</string>
+    <string name="navigate_up">Geri</string>
+
 </resources>

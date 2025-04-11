@@ -8,9 +8,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.TextView
 
 class AnimationManager {
-
     fun animateSuggestion(textView: TextView, suggestion: String) {
-        // Öneri metnini animasyonlu bir şekilde değiştir
         val fadeOut = ObjectAnimator.ofFloat(textView, "alpha", 1f, 0f)
         fadeOut.duration = 200
 
@@ -22,7 +20,6 @@ class AnimationManager {
 
         val animatorSet = AnimatorSet()
 
-        // Fix: Using AnimatorListenerAdapter instead of before
         fadeOut.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 textView.text = suggestion
@@ -39,7 +36,6 @@ class AnimationManager {
     }
 
     fun animateEmoji(textView: TextView) {
-        // Emoji'yi animasyonlu bir şekilde görüntüle
         val bounce = ObjectAnimator.ofFloat(textView, "translationY", 0f, -20f, 0f)
         bounce.duration = 500
         bounce.interpolator = AccelerateDecelerateInterpolator()
