@@ -129,7 +129,10 @@ fun MainActivity.showFavoritesDialog() {
         .setTitle("Favori Önerilerim")
         .setAdapter(adapter) { _, position ->
             val selectedSuggestion = favoritesList[position]
-            animationManager.animateSuggestion(suggestionTextView, selectedSuggestion)
+            // Burada suggestionTextView'e erişimi düzeltelim
+            this.findViewById<android.widget.TextView>(R.id.suggestionTextView)?.let { textView ->
+                animationManager.animateSuggestion(textView, selectedSuggestion)
+            }
             updateEmoji(selectedSuggestion)
             updateCount(selectedSuggestion)
             updateFavoriteButton(selectedSuggestion)
